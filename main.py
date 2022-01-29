@@ -35,11 +35,15 @@ def on_message(ws, message):
 
     print(message)
 
+    # if ping_start == interval:
+    #     ws.send(json.dumps({'method': 'ping'}))
+    # else:
+    #     ping_start += 1
+
 
 def _restart_websocket():
     wsn = websocket.WebSocketApp(socket, on_open=on_open, on_message=on_message, on_close=on_close)
-    # wsn.run_forever(ping_interval=interval, ping_payload=_get_ping_payload())
-    wsn.run_forever()
+    wsn.run_forever(ping_interval=interval)
 
 
 def on_close(ws, test1, test2):
@@ -50,4 +54,4 @@ def on_close(ws, test1, test2):
 
 
 ws = websocket.WebSocketApp(socket, on_open=on_open, on_message=on_message, on_close=on_close)
-ws.run_forever()
+ws.run_forever(ping_interval=interval)
